@@ -19,7 +19,7 @@ module.exports = {
 
     getProductsQtyBranchs: (id) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT products.id, products.name as product, branchs.name as branch, products_branchs.quantity FROM products_branchs INNER JOIN products ON products_branchs.id_product=products.id INNER JOIN branchs ON products_branchs.id_branch=branchs.id WHERE products.id=?', [id], (err,res) => {
+            conn.query('SELECT products_branchs.id, products.name as product, branchs.name as branch, products_branchs.quantity FROM products_branchs INNER JOIN products ON products_branchs.id_product=products.id INNER JOIN branchs ON products_branchs.id_branch=branchs.id WHERE products.id=?', [id], (err,res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
