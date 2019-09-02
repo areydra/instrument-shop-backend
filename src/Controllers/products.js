@@ -11,7 +11,7 @@ module.exports = {
     },
 
     getProductsDetail: (req, res) => {
-        modelProducts.getProductsDetail(req.params.id).then(response => {
+        modelProducts.getProductsDetail(req.params.name).then(response => {
             respon.success(res, 200, response)
         }).catch(err => {
             console.log(err)

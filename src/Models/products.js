@@ -9,9 +9,9 @@ module.exports = {
         })
     },
 
-    getProductsDetail: (id) => {
+    getProductsDetail: (name) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products WHERE id=?', [id], (err, res) => {
+            conn.query('SELECT * FROM products WHERE name=?', [name], (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
