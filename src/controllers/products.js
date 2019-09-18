@@ -11,7 +11,7 @@ module.exports = {
     },
 
     getSearchProducts: (req, res) => {
-        productsModel.getSearchProducts(req.params.search).then(responses => {
+        productsModel.getSearchProducts(req.params.search,req.params.offset,req.params.limit).then(responses => {
             response.success(res, 200, responses)
         }).catch(err => {
             response.failed(res, 400, err, {
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     getProductsByCategory: (req, res) => {
-        productsModel.getProductsByCategory(req.params.id).then(responses => {
+        productsModel.getProductsByCategory(req.params.name_category,req.params.offset,req.params.limit).then(responses => {
             response.success(res, 200, responses)
         }).catch(err => {
             response.failed(res, 400, err, {

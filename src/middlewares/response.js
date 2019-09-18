@@ -11,8 +11,8 @@ module.exports = {
     failed : (res, status, err, message) => {
         const failed = {
             status : status,
-            error : err,
-            message : message
+            err : err,
+            error :  message
         }
         res.json(failed)
     }

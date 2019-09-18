@@ -3,23 +3,23 @@ const conn = require('../config/mysql')
 module.exports = {
     getProducts : (offset, limit) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products LIMIT ?,?', [offset, limit] , (err, res) => {
+            conn.query('SELECT * FROM products LIMIT ?,?', [parseInt(offset), parseInt(limit)] , (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
     },
 
-    getSearchProducts: search => {
+    getSearchProducts: (search, offset, limit) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products WHERE name LIKE ? OR description LIKE ?', ['%'+search+'%', '%'+search+'%'] , (err, res) => {
+            conn.query('SELECT * FROM products WHERE name LIKE ? OR description LIKE ? LIMIT ?,?', ['%'+search+'%', '%'+search+'%', parseInt(offset), parseInt(limit)] , (err, res) => {
                 (!err) ? resolve(res): reject(err)
             })
         })
     },
 
-    getProductsByCategory: id => {
+    getProductsByCategory: (name_category, offset, limit) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products WHERE id_category=?', [id], (err, res) => {
+            conn.query('SELECT products.*, categories.name AS category FROM products INNER JOIN categories ON products.id_category=categories.id WHERE categories.name=? LIMIT ?, ?', [name_category, parseInt(offset), parseInt(limit)], (err, res) => {
                 (!err) ? resolve(res): reject(err)
             })
         })
