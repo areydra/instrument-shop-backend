@@ -7,7 +7,7 @@ module.exports = {
     login : (req, res) => {
         userModel.getUserByEmail(req.body.email).then(async responses => {
             const user = responses[0]
-            const token = jwt.sign({ email: user.email, level: user.id_level }, process.env.SECRET_KEY, { expiresIn: '1m' })
+            const token = jwt.sign({ id: user.id, email: user.email, id_level: user.id_level }, process.env.SECRET_KEY, { expiresIn: '24h' })
             const checkPassword = await bcrypt.compare(req.body.password, user.password)
             
             if(checkPassword){
@@ -29,7 +29,7 @@ module.exports = {
         userModel.postUser(user).then(responses => {
             userModel.getUserByEmail(user.email).then(async responses => {
                 const newUser = responses[0]
-                const token = jwt.sign({ email: newUser.email, level: newUser.id_level }, process.env.SECRET_KEY, { expiresIn: '1m' })
+                const token = jwt.sign({ id: newUser.id, email: newUser.email, id_level: newUser.id_level }, process.env.SECRET_KEY, { expiresIn: '24h' })
                 response.success(res, 200, user, { token:token })
             })
         }).catch(err => {

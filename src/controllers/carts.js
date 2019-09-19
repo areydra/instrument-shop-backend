@@ -12,6 +12,16 @@ module.exports = {
         })
     },
 
+    getCartDetails: (req, res) => {
+        cartsModel.getCartDetails(req.params.id_user, req.params.id_product).then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, {
+                message: 'Sorry something went wrong!'
+            })
+        })
+    },
+
     getCartsByUser: (req, res) => {
         cartsModel.getCartsByUser(req.params.id_user).then(responses => {
             response.success(res, 200, responses)
@@ -33,9 +43,18 @@ module.exports = {
     },
 
     patchCarts: (req, res) => {
+        delete req.body.created_at 
+        delete req.body.updated_at 
+        delete req.body.user 
+        delete req.body.product 
+        delete req.body.price 
+        delete req.body.image
+        delete req.body.id
+
         cartsModel.patchCarts(req.body, req.params.id).then(responses => {
             response.success(res, 200, responses, req.body)
         }).catch(err => {
+            console.log(err)
             response.failed(res, 400, err, {
                 message: 'Sorry something went wrong!'
             })
@@ -43,6 +62,16 @@ module.exports = {
     },
 
     postCarts: (req, res) => {
+        if(req.body.id){
+            delete req.body.created_at 
+            delete req.body.updated_at 
+            delete req.body.user 
+            delete req.body.product 
+            delete req.body.price 
+            delete req.body.image
+            delete req.body.id            
+        }
+
         cartsModel.postCarts(req.body).then(responses => {
             response.success(res, 200, responses, req.body)
         }).catch(err => {
@@ -53,6 +82,7 @@ module.exports = {
     },
 
     deleteCarts: (req, res) => {
+        // console.log(req.params.id)
         cartsModel.deleteCarts(req.params.id).then(responses => {
             response.success(res, 200, responses, {
                 id: req.params.id

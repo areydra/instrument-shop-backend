@@ -1,10 +1,18 @@
 const conn = require('../config/mysql')
-const query = 'SELECT carts.*, users.name AS user, products.name AS product FROM carts INNER JOIN users ON carts.id_user=users.id INNER JOIN products ON carts.id_product=products.id'
+const query = 'SELECT carts.*, users.name AS user, products.name AS product, products.price, products.image FROM carts INNER JOIN users ON carts.id_user=users.id INNER JOIN products ON carts.id_product=products.id'
 
 module.exports = {
     getCarts: () => {
         return new Promise((resolve, reject) => {
             conn.query(query, (err, res) => {
+                (!err) ? resolve(res): reject(err)
+            })
+        })
+    },
+
+    getCartDetails: (id_user, id_product) => {
+        return new Promise((resolve, reject) => {
+            conn.query('SELECT * FROM carts WHERE id_user=? AND id_product=?', [id_user,id_product], (err, res) => {
                 (!err) ? resolve(res): reject(err)
             })
         })
@@ -26,17 +34,17 @@ module.exports = {
         })
     },
 
-    patchCarts: (wishlist, id) => {
+    patchCarts: (carts, id) => {
         return new Promise((resolve, reject) => {
-            conn.query('UPDATE carts SET ?', [wishlist, id], (err, res) => {
+            conn.query('UPDATE carts SET ? WHERE id=?', [carts, id], (err, res) => {
                 (!err) ? resolve(res): reject(err)
             })
         })
     },
 
-    postCarts: wishlist => {
+    postCarts: carts => {
         return new Promise((resolve, reject) => {
-            conn.query('INSERT INTO carts SET ?', [wishlist], (err, res) => {
+            conn.query('INSERT INTO carts SET ?', [carts], (err, res) => {
                 (!err) ? resolve(res): reject(err)
             })
         })

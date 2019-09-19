@@ -12,6 +12,16 @@ module.exports = {
         })
     },
 
+    getWishlistDetails: (req, res) => {
+        wishlistsModel.getWishlistDetails(req.params.id_user, req.params.id_product).then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, {
+                message: 'Sorry something went wrong!'
+            })
+        })
+    },
+
     getWishlistsByUser: (req, res) => {
         wishlistsModel.getWishlistsByUser(req.params.id_user).then(responses => {
             response.success(res, 200, responses)
