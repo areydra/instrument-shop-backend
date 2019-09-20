@@ -10,7 +10,16 @@ module.exports = {
         })
     },
 
+    getCategoriesPaginate : (req, res) => {
+        categoriesModel.getCategoriesPaginate(req.params.offset, req.params.limit).then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
     postCategory : (req, res) => {
+        delete req.body.id
         categoriesModel.postCategory(req.body).then(responses => {
             response.success(res, 200, responses, req.body)
         }).catch(err => {

@@ -11,7 +11,7 @@ module.exports = {
             const checkPassword = await bcrypt.compare(req.body.password, user.password)
             
             if(checkPassword){
-                response.success(res, 200, { status: 200, message: 'success login', token: token })
+                response.success(res, 200, { status: 200, message: 'success login', id_level: user.id_level, token: token })
             }else{
                 response.failed(res, 400, NULL, { status: 400, message: 'invalid email or password' })
             }

@@ -10,6 +10,14 @@ module.exports = {
         })
     },
 
+    getTransactionsPaginate : (req, res) => {
+        transactionsModel.getTransactionsPaginate(req.params.offset, req.params.limit).then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
     getTransactionsByUser : (req, res) => {
         transactionsModel.getTransactionsByUser(req.params.id_user).then(responses => {
             response.success(res, 200, responses)

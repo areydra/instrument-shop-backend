@@ -9,6 +9,14 @@ module.exports = {
         })
     },
 
+    getCategoriesPaginate : (offset, limit) => {
+        return new Promise((resolve, reject) => {
+            conn.query('SELECT * FROM categories LIMIT ?,?', [parseInt(offset),parseInt(limit)], (err, res) => {
+                (!err) ? resolve(res) : reject(err)
+            })
+        })
+    },
+
     postCategory : category => {
         return new Promise((resolve, reject) => {
             conn.query('INSERT INTO categories SET ? ', [category], (err, res) => {

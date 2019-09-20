@@ -9,6 +9,14 @@ module.exports = {
         })
     },
 
+    getRequestProductsPaginate : (offset,limit) => {
+        return new Promise((resolve, reject) => {
+            conn.query('SELECT * FROM request_products LIMIT ?,?',[parseInt(offset), parseInt(limit)], (err, res) => {
+                (!err) ? resolve(res) : reject(err)
+            })
+        })
+    },
+
     getRequestProductDetails: id => {
         return new Promise((resolve, reject) => {
             conn.query('SELECT * FROM request_products WHERE id=?', [id], (err, res) => {

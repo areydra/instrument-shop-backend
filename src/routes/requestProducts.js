@@ -4,6 +4,7 @@ const requestProductsController = require('../controllers/requestProducts')
 
 router 
     .get('/', requestProductsController.getRequestProducts)
+    .get('/page/:offset/:limit', requestProductsController.getRequestProductsPaginate)
     .get('/:id', requestProductsController.getRequestProductDetails)
     .get('/user/:id_user', requestProductsController.getRequestProductsByUser)
     .post('/', requestProductsController.postRequestProducts)

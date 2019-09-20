@@ -3,6 +3,7 @@ const router  = express.Router()
 const productController = require('../controllers/products')
 
 router 
+    .get('/', productController.getAllProducts)
     .get('/:offset/:limit', productController.getProducts)
     .get('/:name', productController.getProductDetails)
     .get('/search/:search/:offset/:limit', productController.getSearchProducts)

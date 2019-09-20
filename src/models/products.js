@@ -1,9 +1,17 @@
 const conn = require('../config/mysql')
 
 module.exports = {
+    getAllProducts : () => {
+        return new Promise((resolve, reject) => {
+            conn.query('SELECT products.*, categories.name AS category FROM products INNER JOIN categories ON products.id_category=categories.id',  (err, res) => {
+                (!err) ? resolve(res) : reject(err)
+            })
+        })
+    },
+
     getProducts : (offset, limit) => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products LIMIT ?,?', [parseInt(offset), parseInt(limit)] , (err, res) => {
+            conn.query('SELECT products.*, categories.name AS category FROM products INNER JOIN categories ON products.id_category=categories.id ORDER BY products.created_at LIMIT ?,?', [parseInt(offset), parseInt(limit)] , (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
@@ -27,7 +35,7 @@ module.exports = {
 
     getProductDetails : name => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT * FROM products WHERE name=?', [name], (err, res) => {
+            conn.query('SELECT products.*, categories.name AS category FROM products INNER JOIN categories ON products.id_category=categories.id WHERE products.name=?', [name], (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
@@ -42,6 +50,7 @@ module.exports = {
     },
 
     patchProduct : (product,id) => {
+        if(product.category) delete product.category
         return new Promise((resolve, reject) => {
             conn.query('UPDATE products SET ? WHERE id=?', [product, id], (err, res) => {
                 (!err) ? resolve(res) : reject(err)

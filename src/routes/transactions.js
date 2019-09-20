@@ -4,6 +4,7 @@ const transactionsController = require('../controllers/transactions')
 
 router
     .get('/', transactionsController.getTransactions)
+    .get('/page/:offset/:limit', transactionsController.getTransactionsPaginate)
     .get('/user/:id_user', transactionsController.getTransactionsByUser)
     .get('/product/:id_product', transactionsController.getTransactionsByProduct)
     .post('/', transactionsController.postTransactions)

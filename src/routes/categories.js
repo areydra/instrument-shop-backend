@@ -4,6 +4,7 @@ const categoriesController = require('../controllers/categories')
 
 router
     .get('/', categoriesController.getCategories)
+    .get('/page/:offset/:limit', categoriesController.getCategoriesPaginate)
     .post('/', categoriesController.postCategory)
     .patch('/:id', categoriesController.patchCategory)
     .delete('/:id', categoriesController.deleteCategory)

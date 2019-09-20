@@ -10,6 +10,14 @@ module.exports = {
         })
     },
 
+    getRequestProductsPaginate: (req, res) => {
+        requestProductsModel.getRequestProductsPaginate(req.params.offset, req.params.limit).then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
     getRequestProductDetails: (req, res) => {
         requestProductsModel.getRequestProductDetails(req.params.id).then(responses => {
             response.success(res, 200, responses)

@@ -2,6 +2,14 @@ const response = require('../middlewares/response')
 const productsModel = require('../models/products')
 
 module.exports = {
+    getAllProducts : (req, res) => {
+        productsModel.getAllProducts().then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
     getProducts : (req, res) => {
         productsModel.getProducts(req.params.offset, req.params.limit).then(responses => {
             response.success(res, 200, responses)
@@ -39,8 +47,14 @@ module.exports = {
     },
 
     postProduct : (req, res) => {
-        productsModel.postProduct(req.body).then(responses => {
-            response.success(res, 200, responses, req.body)
+        if(req.body.id) delete req.body.id
+
+        productsModel.postProduct(req.body).then(responsesPost => {
+            productsModel.getProductDetails(req.body.name).then(responses => {
+                response.success(res, 200, responsesPost, responses)
+            }).catch(err => {
+                response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+            })
         }).catch(err => {
             response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
         })
