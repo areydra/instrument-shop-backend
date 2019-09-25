@@ -10,6 +10,22 @@ module.exports = {
         })
     },
 
+    getFavoriteProducts : (req, res) => {
+        productsModel.getFavoriteProducts().then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
+    getBestProducts : (req, res) => {
+        productsModel.getBestProducts().then(responses => {
+            response.success(res, 200, responses)
+        }).catch(err => {
+            response.failed(res, 400, err, { message: 'Sorry something went wrong!' })
+        })
+    },
+
     getProducts : (req, res) => {
         productsModel.getProducts(req.params.offset, req.params.limit).then(responses => {
             response.success(res, 200, responses)

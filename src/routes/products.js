@@ -5,6 +5,8 @@ const authorization = require('../middlewares/authorization')
 
 router 
     .get('/', productController.getAllProducts)
+    .get('/most-favorites', productController.getFavoriteProducts)
+    .get('/best-products', productController.getBestProducts)
     .get('/:offset/:limit', productController.getProducts)
     .get('/:name', productController.getProductDetails)
     .get('/search/:search/:offset/:limit', productController.getSearchProducts)
