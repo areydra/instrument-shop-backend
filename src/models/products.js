@@ -11,7 +11,7 @@ module.exports = {
 
     getFavoriteProducts : () => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT wishlists.id_product, products.name, products.image, products.price, COUNT(wishlists.id_product) FROM wishlists INNER JOIN products ON wishlists.id_product = products.id GROUP BY wishlists.id_product ORDER BY COUNT(wishlists.id_product) DESC LIMIT 0,10',  (err, res) => {
+            conn.query('SELECT wishlists.id_product, products.name, products.image, products.price, COUNT(wishlists.id_product) AS total FROM wishlists INNER JOIN products ON wishlists.id_product = products.id GROUP BY wishlists.id_product ORDER BY COUNT(wishlists.id_product) DESC LIMIT 0,10',  (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
@@ -19,7 +19,7 @@ module.exports = {
 
     getBestProducts : () => {
         return new Promise((resolve, reject) => {
-            conn.query('SELECT transaksi.id_product, products.name, products.image, products.price, COUNT(transaksi.id_product) FROM transaksi INNER JOIN products ON transaksi.id_product = products.id GROUP BY transaksi.id_product ORDER BY COUNT(transaksi.id_product) DESC LIMIT 0,10',  (err, res) => {
+            conn.query('SELECT transaksi.id_product, products.name, products.image, products.price, COUNT(transaksi.id_product) AS total FROM transaksi INNER JOIN products ON transaksi.id_product = products.id GROUP BY transaksi.id_product ORDER BY COUNT(transaksi.id_product) DESC LIMIT 0,10',  (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
