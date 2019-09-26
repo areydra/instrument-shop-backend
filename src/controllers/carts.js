@@ -72,8 +72,10 @@ module.exports = {
             delete req.body.id            
         }
 
-        cartsModel.postCarts(req.body).then(responses => {
-            response.success(res, 200, responses, req.body)
+        cartsModel.postCarts(req.body).then(responsess => {
+            cartsModel.getCartDetails(req.body.id_user, req.body.id_product).then(responses => {
+                response.success(res, 200, responses, req.body)                
+            })
         }).catch(err => {
             response.failed(res, 400, err, {
                 message: 'Sorry something went wrong!'
