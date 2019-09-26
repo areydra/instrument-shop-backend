@@ -20,7 +20,7 @@ module.exports = {
 
     getTransactionsByUser : id_user => {
         return new Promise((resolve, reject) => {
-            conn.query(`${query} WHERE transaksi.id_user=?`, [id_user], (err, res) => {
+            conn.query(`${query} WHERE transaksi.id_user=? ORDER BY transaksi.created_at DESC`, [id_user], (err, res) => {
                 (!err) ? resolve(res) : reject(err)
             })
         })
