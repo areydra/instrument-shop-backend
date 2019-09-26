@@ -53,8 +53,10 @@ module.exports = {
     },
 
     postWishlists: (req, res) => {
-        wishlistsModel.postWishlists(req.body).then(responses => {
-            response.success(res, 200, responses, req.body)
+        wishlistsModel.postWishlists(req.body).then(responsess => {
+            wishlistsModel.getWishlistDetails(req.body.id_user, req.body.id_product).then(responses => {
+                response.success(res, 200, responses, req.body)                
+            })
         }).catch(err => {
             response.failed(res, 400, err, {
                 message: 'Sorry something went wrong!'
